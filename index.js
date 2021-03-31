@@ -4,13 +4,22 @@ import PropTypes from 'prop-types';
 const SkeletonTable = ({ columns, rowCount }) => {
   return (
     <Table
+      rowKey="key"
       pagination={false}
-      dataSource={[...Array(rowCount)].map(() => ({}))}
+      dataSource={[...Array(rowCount)].map((_, index) => ({
+        key: `key${index}`,
+      }))}
       columns={columns.map((column) => {
         return {
           ...column,
           render: function renderPlaceholder() {
-            return <Skeleton title={true} paragraph={false} />;
+            return (
+              <Skeleton
+                key={column.dataIndex}
+                title={true}
+                paragraph={false}
+              />
+            );
           },
         };
       })}
